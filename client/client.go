@@ -27,7 +27,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	fmt.Printf("Enter your name: ")
+	fmt.Printf("Give me your name: ")
 	reader := bufio.NewScanner(os.Stdin)
 	reader.Scan()
 	name := reader.Text()

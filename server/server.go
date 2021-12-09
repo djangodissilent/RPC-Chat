@@ -52,6 +52,6 @@ func (c *User) ADD(C User, reply *bool) error {
 }
 
 func (c *User) ProcessMessage(msg Message, reply *bool) error {
-	messages <- "[" + msg.Sender.Name + "]: " + msg.Content + "\n"
+	messages <-  msg.Sender.Name + " : " + msg.Content + "\n"
 	return nil
 }
