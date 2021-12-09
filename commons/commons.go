@@ -1,12 +1,12 @@
 package commons
 
-type Client struct {
+type User struct {
 	Name string
 	Addr string
 }
 
 type Message struct {
 	Content string
-	Sender Client
+	Sender User
 }
 

@@ -10,7 +10,7 @@ import (
 	commons "rpcChat/commons"
 )
 
-type Client commons.Client
+type User commons.User
 type Message commons.Message
 
 func main() {
@@ -31,8 +31,8 @@ func main() {
 	reader := bufio.NewScanner(os.Stdin)
 	reader.Scan()
 	name := reader.Text()
-	cli := Client{Addr: addr, Name: name}
-	err = rpcClient.Call("Client.ADD", cli, new(bool))
+	cli := User{Addr: addr, Name: name}
+	err = rpcClient.Call("User.ADD", cli, new(bool))
 
 	if err != nil {
 		log.Fatal(err)
@@ -43,32 +43,24 @@ func main() {
 		if err != nil {
 			log.Fatal(err)
 		}
-		listener := new(Client)
+		listener := new(User)
 		rpc.Register(listener)
 		rpc.Accept(inbound)
 	}()
 	in := bufio.NewReader(os.Stdin)
 	for {
 		msg, _, err := in.ReadLine()
-		if string(msg) == "exit" {
-			return
-		}
 		if err != nil {
 			log.Fatal(err)
 		}
-		envelop := commons.Message{Sender: commons.Client(cli), Content: string(msg)}
-		err = rpcClient.Call("Client.HandleMessage", envelop, new(bool))
+		envelop := commons.Message{Sender: commons.User(cli), Content: string(msg)}
+		err = rpcClient.Call("User.ProcessMessage", envelop, new(bool))
 		if err != nil {
 			log.Fatal(err)
 		}
 	}
 }
 
-func (c *Client) Listen(msg string, reply *bool) error {
-	*reply = true
-	print(msg + "\n>> ")
-	return nil
-}
 
 func GetFreePort() (port int, err error) {
 	var a *net.TCPAddr
@@ -80,4 +72,10 @@ func GetFreePort() (port int, err error) {
 		}
 	}
 	return
+}
+
+func (c *User) Listen(msg string, reply *bool) error {
+	*reply = true
+	print(msg + "\n> ")
+	return nil
 }
