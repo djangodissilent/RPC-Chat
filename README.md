@@ -1,8 +1,19 @@
 # RPC-Chat Server & Client in go
 
 
-Usage:
+#### Usage:
 
-  ```cd server; go build ; ./server```
+```
+Build and run the server
+cd server
+go build 
+./server
+```
   
-  ```cd client; go build ; ./client```
+```
+Build and run the client(s)
+cd client 
+go build
+./client
+
+```
