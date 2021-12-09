@@ -1,12 +1,10 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"net"
 	"net/rpc"
 	commons "rpcChat/commons"
-	"time"
 )
 
 type Client commons.Client
@@ -39,9 +37,6 @@ func main() {
 	listener := new(Client)
 	rpc.Register(listener)
 	go rpc.Accept(inbound)
-	go spinner()
-
-	ticker := time.NewTicker(time.Duration(ADDAGRESS) * time.Second)
 
 	for {
 		select {
@@ -57,21 +52,8 @@ func main() {
 					continue
 				}
 			}
-		case add := <-ticker.C:
-			messages <- ADDS[int(add.Second())%len(ADDS)]
 		}
 	}
-}
-
-func (c *Client) REMOVE(C Client, reply *bool) error {
-	*reply = true
-	_, ok := clients[C]
-	if ok {
-		delete(clients, C)
-		println("removed user " + C.Name + " with adress " + "[" + C.Addr + "]")
-		messages <- "[" + C.Name + "]" + " has left the chat!" + "\n"
-	}
-	return nil
 }
 
 func (c *Client) ADD(C Client, reply *bool) error {
@@ -84,14 +66,4 @@ func (c *Client) ADD(C Client, reply *bool) error {
 func (c *Client) HandleMessage(msg Message, reply *bool) error {
 	messages <- "[" + msg.Sender.Name + "]: " + msg.Content + "\n"
 	return nil
-}
-
-func spinner() {
-	for {
-		for _, r := range `-\|/` {
-			fmt.Printf("\r%c", r)
-
-			time.Sleep(time.Millisecond * 70)
-		}
-	}
 }

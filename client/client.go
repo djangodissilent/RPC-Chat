@@ -47,12 +47,6 @@ func main() {
 		rpc.Register(listener)
 		rpc.Accept(inbound)
 	}()
-
-	defer func() {
-		println("Bye!")
-		rpcClient.Call("Client.REMOVE", cli, new(bool))
-	}()
-
 	in := bufio.NewReader(os.Stdin)
 	for {
 		msg, _, err := in.ReadLine()
