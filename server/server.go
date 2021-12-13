@@ -13,16 +13,10 @@ type Client commons.Client
 type Message commons.Message
 
 var (
-	messages = make(chan string, 500)
+	messages = make(chan string, 200)
 	clients  = make(map[Client]bool)
 
-	ADDS = []string{
-		"Adds By Creator: Bayern Rules",
-		"Adds By Creator: Real 's Lame",
-		"Adds By Creator: LEVA 's GOAT",
-		"Adds By Creator: Barca My A*$",
-	}
-	ADDAGRESS = 15
+	Interval = 3
 )
 
 func main() {
@@ -41,7 +35,7 @@ func main() {
 	go rpc.Accept(inbound)
 	go spinner()
 
-	ticker := time.NewTicker(time.Duration(ADDAGRESS) * time.Second)
+	ticker := time.NewTicker(time.Duration(Interval) * time.Second)
 
 	for {
 		select {
@@ -57,8 +51,8 @@ func main() {
 					continue
 				}
 			}
-		case add := <-ticker.C:
-			messages <- ADDS[int(add.Second())%len(ADDS)]
+		case <-ticker.C:
+			fmt.Printf(" \033[32m Online: \033[33m %d \033[34m | \033[31m Server-Time: %s \033[33m", len(clients), time.Now().Format("2006-01-02 15:04:05"))
 		}
 	}
 }

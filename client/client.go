@@ -27,7 +27,8 @@ func main() {
 		log.Fatal(err)
 	}
 
-	fmt.Printf("Enter your name: ")
+	print("Welcome\033[0m to \033[36mRPC-Chat\033[0m!\n\nType \033[31m exit \033[0m to leave the chat\n\n")
+	print("Choose a handle: ")
 	reader := bufio.NewScanner(os.Stdin)
 	reader.Scan()
 	name := reader.Text()
