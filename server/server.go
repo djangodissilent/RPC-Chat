@@ -52,7 +52,7 @@ func main() {
 				}
 			}
 		case <-ticker.C:
-			fmt.Printf(" \033[32m Online: \033[33m %d \033[34m | \033[31m Server-Time: %s \033[33m", len(clients), time.Now().Format("2006-01-02 15:04:05"))
+			fmt.Printf(" \033[32m Online: \033[0m %d \033[34m | \033[31m Server-Time: %s \033[0m", len(clients), time.Now().Format("2006-01-02 15:04:05"))
 		}
 	}
 }
@@ -62,7 +62,7 @@ func (c *Client) REMOVE(C Client, reply *bool) error {
 	_, ok := clients[C]
 	if ok {
 		delete(clients, C)
-		println("removed user " + C.Name + " with adress " + "[" + C.Addr + "]")
+		println("\r\033[31mRemoved\033[0m user " + C.Name + " with adress     " + "    [" + C.Addr + "]")
 		messages <- "[" + C.Name + "]" + " has left the chat!" + "\n"
 	}
 	return nil
@@ -70,7 +70,7 @@ func (c *Client) REMOVE(C Client, reply *bool) error {
 
 func (c *Client) ADD(C Client, reply *bool) error {
 	clients[C] = true
-	println("registered user " + C.Name + " with adress " + "[" + C.Addr + "]")
+	println("\r\033[34mRegistered\033[0m user " + "@" + C.Name + " with adress     " + "    [" + C.Addr + "]")
 	messages <- "[" + C.Name + "]" + " has joined the chat!" + "\n"
 	return nil
 }

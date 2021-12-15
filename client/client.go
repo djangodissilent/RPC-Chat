@@ -53,7 +53,7 @@ func main() {
 		println("Bye!")
 		rpcClient.Call("Client.REMOVE", cli, new(bool))
 	}()
-
+	
 	in := bufio.NewReader(os.Stdin)
 	for {
 		msg, _, err := in.ReadLine()
@@ -73,7 +73,7 @@ func main() {
 
 func (c *Client) Listen(msg string, reply *bool) error {
 	*reply = true
-	print(msg + "\n>> ")
+	print(msg + "\n\033[34m>\033[0m ")
 	return nil
 }
 
