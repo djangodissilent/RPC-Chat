@@ -1,5 +1,6 @@
 # RPC-Chat Server & Client in go
 
+A Simple Chat server implementation in go to demonstrate the use of Remote Procedure Call in Go
 
 #### Usage:
 
